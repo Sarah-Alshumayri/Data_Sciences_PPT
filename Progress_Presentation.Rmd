@@ -9,7 +9,7 @@ date: "2023-11-18"
 knitr::opts_chunk$set(echo = FALSE) 
 ```
 
-
+hi from ameeraaa
 ## Slide with Bullets
 
 - Bullet 1
