@@ -1,7 +1,7 @@
 ---
-title: "Sleep Disorder Prediction"
+title: "Sleep Disorder"
 output: powerpoint_presentation
-authers: 
+author: "Sarah Alshumayri, Reema Abdallah, Yehya Aseeri" 
 date: "2023-11-18"
 ---
 
@@ -9,28 +9,52 @@ date: "2023-11-18"
 knitr::opts_chunk$set(echo = FALSE) 
 ```
 
-hi from ameeraaa
-## Slide with Bullets
+## Problem Statement
 
-- Bullet 1
-- Bullet 2
-- Bullet 3
+"Exploring the Interplay Between Sleep, Health, and Lifestyle: A Data-Driven Approach"
 
-## Slide with R Output
+This project investigates the relationship between sleep patterns (efficiency, duration, stages) and various health and lifestyle factors (physical activity, stress, caffeine/alcohol consumption, sleep disorders), aiming to uncover correlations and insights into how these elements impact an individual's sleep quality and overall well-being.
 
-```{r cars, echo = TRUE}
-#this is here just for example 
-summary(cars)
+## Background
+
+Sleep is a critical component of overall health and well-being, yet it is often influenced by a myriad of factors ranging from lifestyle choices to health conditions. Understanding the dynamics of sleep and its relationship with different health and lifestyle factors can provide crucial insights for improving sleep quality and, by extension, overall health and life satisfaction.
+
+This project leverages data-driven analysis to explore these relationships. With datasets detailing sleep efficiency, stages of sleep, and other relevant sleep metrics, combined with data on physical activity, stress levels, BMI categories, and more, we can draw a comprehensive picture of the multifaceted nature of sleep in the context of contemporary lifestyles. This analysis can potentially lead to actionable recommendations for individuals seeking to improve their sleep and overall health.
+
+```{r}
+# Load necessary libraries
+library(dplyr)
+library(ggplot2)
+
+# Read the dataset
+sleep_data <- read.csv("Data/Sleep_health_and_lifestyle_dataset.csv")
+
+# Preliminary data exploration
+summary(sleep_data)
+
+# Basic visualization
+ggplot(sleep_data, aes(x = Age, y = Sleep.Duration)) +
+  geom_point() +
+  labs(title = "Age vs. Sleep Duration")
 ```
 
-## Slide with Plot
+## Methods Explored
 
-```{r pressure}
-#this is here just for example 
-plot(pressure)
-```
+Reema's part
 
-##This is new slide 
+## The Methods/Tools Used
+Yahya's part
 
 
-you can write anything here...
+## Results 
+Sarah's Part
+
+### Further Results:
+Sarah's Part
+
+## Lessons Learned
+Reema's part
+
+## Future Plans
+Reema's part
+
