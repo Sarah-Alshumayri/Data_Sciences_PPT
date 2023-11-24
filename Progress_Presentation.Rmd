@@ -1,8 +1,10 @@
 ---
 title: "Sleep Disorder"
-output: powerpoint_presentation
-author: "Sarah Alshumayri, Reema Abdallah, Yehya Aseeri" 
+author: "Sarah Alshumayri, Reema Abdallah, Yehya Aseeri"
 date: "2023-11-18"
+output:
+  powerpoint_presentation: default
+  beamer_presentation: default
 ---
 
 ```{r setup, include=FALSE}
@@ -11,9 +13,9 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Problem Statement
 
-"Exploring the Interplay Between Sleep, Health, and Lifestyle: A Data-Driven Approach"
+"Sleep Disorder Analysis: Unveiling the Interplay Between Lifestyle, Health, and Sleep Quality"
 
-This project investigates the relationship between sleep patterns (efficiency, duration, stages) and various health and lifestyle factors (physical activity, stress, caffeine/alcohol consumption, sleep disorders), aiming to uncover correlations and insights into how these elements impact an individual's sleep quality and overall well-being.
+This project aims to delve into an extensive dataset comprising individual sleep patterns, health indicators, and lifestyle choices. Our objective is to uncover the complex relationships between these factors and their collective impact on sleep quality and disorders. The insights gained through this analysis could be pivotal in enhancing our understanding of sleep health and informing better lifestyle and health choices.
 
 ## Background
 
@@ -21,22 +23,6 @@ Sleep is a critical component of overall health and well-being, yet it is often 
 
 This project leverages data-driven analysis to explore these relationships. With datasets detailing sleep efficiency, stages of sleep, and other relevant sleep metrics, combined with data on physical activity, stress levels, BMI categories, and more, we can draw a comprehensive picture of the multifaceted nature of sleep in the context of contemporary lifestyles. This analysis can potentially lead to actionable recommendations for individuals seeking to improve their sleep and overall health.
 
-```{r}
-# Load necessary libraries
-library(dplyr)
-library(ggplot2)
-
-# Read the dataset
-sleep_data <- read.csv("Data/Sleep_health_and_lifestyle_dataset.csv")
-
-# Preliminary data exploration
-summary(sleep_data)
-
-# Basic visualization
-ggplot(sleep_data, aes(x = Age, y = Sleep.Duration)) +
-  geom_point() +
-  labs(title = "Age vs. Sleep Duration")
-```
 
 ## Methods Explored
 
@@ -47,10 +33,58 @@ Yahya's part
 
 
 ## Results 
-Sarah's Part
+**Presenting Initial Findings or Data**
+Our preliminary analysis, based on the cleaned and prepared data, has revealed significant insights into the correlation between sleep disorders and various lifestyle and health factors.
+
+```{r}
+library(tidyverse)
+
+# Load the dataset
+sleep_data <- read_csv("Data/Sleep_health_and_lifestyle_dataset.csv")
+
+# Data cleaning and preparation
+sleep_data <- sleep_data %>%
+  mutate_if(is.character, as.factor) %>%  # Convert character columns to factors
+  drop_na() %>%  # Remove rows with missing values
+  mutate(SleepCategory = case_when(
+    `Quality of Sleep` >= 85 ~ "Good",
+    `Quality of Sleep` < 85 ~ "Poor"
+  )) %>%
+  mutate(SleepCategory = as.factor(SleepCategory))
+
+```
+
 
 ### Further Results:
-Sarah's Part
+**Additional Results or Visualizations**
+Building upon our initial findings, the following visualization provides an insight into the relationship between lifestyle choices and sleep quality.
+
+
+```{r}
+library(ggplot2)
+
+activity_sleep_relation <- sleep_data %>%
+  group_by(`Physical Activity Level`) %>%
+  summarise(AverageSleepQuality = mean(`Quality of Sleep`, na.rm = TRUE), .groups = 'drop') %>%
+  arrange(desc(AverageSleepQuality))
+
+ggplot(activity_sleep_relation, aes(x = reorder(`Physical Activity Level`, -AverageSleepQuality), y = AverageSleepQuality)) +
+  geom_bar(stat = "identity", fill = "lightblue") +
+  theme_minimal() +
+  theme(
+    axis.title = element_text(size = 14), # Increase axis title text size
+    axis.text = element_text(size = 12),  # Increase axis text size
+    plot.title = element_text(size = 16)  # Increase plot title text size
+  ) +
+  coord_flip() +
+  labs(title = "Relationship Between Physical Activity Level and Sleep Quality",
+       x = "Physical Activity Level",
+       y = "Average Sleep Quality")
+
+# Save the plot with increased dimensions
+ggsave("enhanced_plot.png", width = 10, height = 8, dpi = 300)
+
+```
 
 ## Lessons Learned
 Reema's part
